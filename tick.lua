@@ -5,7 +5,7 @@
 
 -- get some info from warp drive
 local wiDefaultData = warpdrive.getData()
-wiDefaultData = json.decode(wiDriveData)
+wiDefaultData = json.decode(wiDefaultData)
 
 -- hide panel if very close to planet
 if (wiDefaultData.distance < 20000) then
@@ -13,12 +13,12 @@ if (wiDefaultData.distance < 20000) then
 
 -- show panel if warp destination is set
 elseif (wiDefaultData.destination ~= 'Unknown') then
-    
+
     -- hide default warp drive panel
     warpdrive.hide()
     
     -- create the warp info panel if needed
-    if(not warpPanelID) then createWarpInfoPanel() end
+    if(not wiPanelID) then createWarpInfoPanel() end
     
     -- get distance from default widget and mass from core
     local su = wiDefaultData.distance/200000
@@ -48,10 +48,10 @@ elseif (wiDefaultData.destination ~= 'Unknown') then
     end
     
     -- update all widgets within panel
-    system.updateData(locDID, '{"label": "Destination", "value": "'..wiDefaultData.destination..'", "unit":""}')
-    system.updateData(distDID, '{"label": "Distance", "value": "'..round(su,2)..'", "unit":" su"}')
-    system.updateData(massDID, '{"label": "Mass", "value": "'..round(mass,2)..'", "unit":" t"}')
-    system.updateData(cellsDID, '{"label": "Cost", "value": "'..cellsHave..' / '..cellsNeed..'", "unit":" cells"}')    
-    system.updateData(statDID, '{"label": "Status", "value": "'..status..'", "unit":""}')
+    system.updateData(wiLocDID, '{"label": "Destination", "value": "'..wiDefaultData.destination..'", "unit":""}')
+    system.updateData(wiDistDID, '{"label": "Distance", "value": "'..round(su,2)..'", "unit":" su"}')
+    system.updateData(wiMassDID, '{"label": "Mass", "value": "'..round(mass,2)..'", "unit":" t"}')
+    system.updateData(wiCellsDID, '{"label": "Cost", "value": "'..cellsHave..' / '..cellsNeed..'", "unit":" cells"}')    
+    system.updateData(wiStatDID, '{"label": "Status", "value": "'..status..'", "unit":""}')
     
 end
