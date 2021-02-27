@@ -1,8 +1,10 @@
-# Warp Info Panel
+# Warp Info Panel (WIP)
 
 ## About
 
-Adds a warp drive widget that – unlike the default one – continuously auto-updates the amount of warp cells needed. Useful when partially slowboating a route.
+This is still very much work in progress. Might not always show the correct cell amount.
+
+Adds a warp info widget that – unlike the default one – continuously auto-updates the amount of warp cells needed. Useful when partially slowboating a route.
 
 ![screenshot of panel](https://slow.re/dual/imgs/warpinfo.jpg)
 
