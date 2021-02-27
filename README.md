@@ -6,8 +6,6 @@ Adds a warp drive widget that – unlike the default one – continuously auto-u
 
 ![screenshot of panel](https://slow.re/dual/imgs/warpinfo.jpg)
 
-![screenshot of panel](https://slow.re/dual/imgs/warpinfo.jpg)
-
 ## Installation
 
 0) Can be run with a control seat or programming board.
