@@ -33,4 +33,5 @@ function createWarpInfoPanel()
 end
 
 wiMulti = nil
+unit.hide()
 unit.setTimer('warpInfo', 1)

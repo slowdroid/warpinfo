@@ -5,29 +5,30 @@
 
 -- get some info from warp drive
 local wiDefaultData = warpdrive.getData()
+-- system.print(wiDefaultData)
 wiDefaultData = json.decode(wiDefaultData)
 
--- hide panel if very close to planet
+-- hide panel if close to planet
 if (wiDefaultData.distance < 20000) then
     if(warpPanelID and system.destroyWidgetPanel(warpPanelID)) then warpPanelID = nil end
 
 -- show panel if warp destination is set
 elseif (wiDefaultData.destination ~= 'Unknown') then
 
-    -- hide default warp drive panel
+    -- hide default warp drive panel (might be ignored by other scripts, ie. orbital hud)
     warpdrive.hide()
     
     -- create the warp info panel if needed
     if(not wiPanelID) then createWarpInfoPanel() end
     
     -- get distance from default widget and mass from core
-    local su = wiDefaultData.distance/200000
-    local mass = core.getConstructMass()/1000
+    local su = wiDefaultData.distance / 200000
+    local mass = core.getConstructMass() / 1000
     
     -- calculate formula multiplier based on default widget info
-    if(not multi) then
+    if(not wiMulti) then
         local cellsCalc = plutils.split(wiDefaultData.cellCount,' / ')[2]
-        multi = cellsCalc / (mass*su)
+        wiMulti = cellsCalc / (mass*su)
         --system.print('warp cell formula multiplier: '..round(multi,7))
     end
     
@@ -35,17 +36,19 @@ elseif (wiDefaultData.destination ~= 'Unknown') then
     local cellsHave = plutils.split(wiDefaultData.cellCount,' / ')[1]
 
     -- calculate needed warp cells
-    local cellsNeed = utils.round(mass * su * multi)     
+    local cellsNeed = utils.round(mass * su * wiMulti)
     
     -- figure out status message
     local status = ''
-    if(wiDefaultData.buttonMsg == 'WARPING...') then
+     if(wiDefaultData.buttonMsg == 'Warping...') then
         status = wiDefaultData.buttonMsg:lower()
-    elseif(wiDefaultData.errorMsg == '') then 
+     elseif(wiDefaultData.errorMsg == 'NOT ENOUGH CELLS' and cellsHave < cellsNeed) then 
+        status = 'not enough cells'
+	elseif(wiDefaultData.errorMsg == '') then 
         status = 'ready'
-    else   
+     else   
         status = wiDefaultData.errorMsg:lower()
-    end
+     end
     
     -- update all widgets within panel
     system.updateData(wiLocDID, '{"label": "Destination", "value": "'..wiDefaultData.destination..'", "unit":""}')
